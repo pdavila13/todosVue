@@ -15,7 +15,35 @@
         </div>
       </md-toolbar>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>
+      <div class="phone-viewport">
+        <md-list>
+          <md-list-item>
+            <md-icon>move_to_inbox</md-icon> <span>Todos</span>
+          </md-list-item>
+
+          <md-list-item>
+            <md-icon>https</md-icon> <span>Tokens</span>
+          </md-list-item>
+
+          <md-list-item>
+            <md-icon>description</md-icon> <span>Tasks</span>
+
+            <md-divider class="md-inset"></md-divider>
+          </md-list-item>
+
+          <md-list-item>
+            <md-avatar>
+              <img src="https://placeimg.com/40/40/people/5" alt="People">
+            </md-avatar>
+
+            <span>Abbey Christansen</span>
+
+            <md-button class="md-icon-button md-list-action">
+              <md-icon class="md-primary">chat_bubble</md-icon>
+            </md-button>
+          </md-list-item>
+        </md-list>
+      </div>
     </md-sidenav>
   </div>
 </template>
