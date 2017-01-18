@@ -1,29 +1,23 @@
 <template>
     <div>
-        <div>
-            <ul>
-                <li v-for="(todo, index) in todos">
-                    {{ todo.name }}
-                </li>
-            </ul>
-        </div>
+        <ul>
+            <li v-for="(todo, index) in todos">
+                {{ todo.name }}
+            </li>
+        </ul>
     </div>
 </template>
 <style>
-    body{
-        background-color:#ff0000;
-    }
+
 </style>
 <script>
 export default {
-  name: 'todos',
   data () {
     return {
       todos: []
     }
   },
   created () {
-    console.log('Component todolist created.')
     this.fetchData()
   },
   methods: {
@@ -32,9 +26,10 @@ export default {
     },
     fetchPage: function (page) {
       this.$http.get('http://localhost:8002/api/v1/task?page=' + page).then((response) => {
-        console.log(response)
+        console.log(response.data)
+        this.todos = response.data.data
       }, (response) => {
-        console.log(response)
+        console.log(response.data)
       })
     }
   }
