@@ -1,9 +1,12 @@
 <template>
     <div>
         <div v-show="!authorized">
-            <md-button class="md-raised md-primary">CONNECT</md-button>
+            <md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>
         </div>
-        <ul>
+        <div v-show="authorized">
+            <md-button class="md-raised md-primary" @click="logout">LOGOUT</md-button>
+        </div>
+        <ul v-show="authorized">
             <li v-for="(todo, index) in todos">
                 {{ todo.name }}
             </li>
@@ -15,6 +18,8 @@
 </style>
 <script>
 var STORAGE_KEY = 'todosvue_token'
+var AUTH_CLIENT_ID = 2
+var AUTH_REDIRECT_URI = 'http://localhost:8080/todos'
 
 export default {
   data () {
@@ -24,8 +29,9 @@ export default {
     }
   },
   created () {
-    console.log(this.fetchToken())
-    if (this.fetchToken) {
+    var token = this.extractToken(document.location.hash)
+    if (token) this.saveToken(token)
+    if (this.fetchToken()) {
       this.authorized = true
     } else {
       this.authorized = false
@@ -37,15 +43,30 @@ export default {
       return this.fetchPage(1)
     },
     fetchPage: function (page) {
-      this.$http.get('http://localhost:8002/api/v1/task?page=' + page).then((response) => {
+      this.$http.get('http://oauthserver.dev:8002/api/v1/task?page=' + page).then((response) => {
         console.log(response.data)
         this.todos = response.data.data
       }, (response) => {
         console.log(response.data)
       })
     },
+    extractToken: function (hash) {
+      var match = hash.match(/access_token=(\w+)/)
+      return !!match && match[1]
+    },
+    logout: function () {
+      window.localStorage.removeItem(STORAGE_KEY)
+      this.authorized = false
+    },
     connect: function () {
-      console.log('do connect here!')
+      query = {
+        client_id: AUTH_CLIENT_ID,
+        redirect_uri: AUTH_REDIRECT_URI,
+        response_type: 'token',
+        scope: ''
+      }
+      var query = window.querystring.stringify(query)
+      window.location.replace('http://oauthserver.dev:8002/oauth/authorize?' + query)
     },
     fetchToken: function () {
       return window.localStorage.getItem(STORAGE_KEY)
