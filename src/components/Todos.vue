@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div v-show="!authorized">
-            <md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>
-        </div>
+        <!--<div v-show="!authorized">-->
+            <!--<md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>-->
+        <!--</div>-->
 
         <div v-show="authorized">
             <md-button class="md-raised md-primary" @click="logout">LOGOUT</md-button>
         </div>
 
-        <md-list v-show="authorized" class="md-double-line">
+        <md-list v-show="!authorized" class="md-double-line">
             <md-subheader class="md-inset">Tasks</md-subheader>
 
             <md-list-item v-for="(todo, index) in todos">
@@ -21,6 +21,49 @@
                 <md-switch v-model="done" id="done" name="done"></md-switch>
             </md-list-item>
         </md-list>
+
+        <!--<md-table-card v-once v-show="!authorized">-->
+            <!--<md-toolbar>-->
+                <!--<h1 class="md-title">Tasks</h1>-->
+                <!--<md-button class="md-icon-button">-->
+                    <!--<md-icon>filter_list</md-icon>-->
+                <!--</md-button>-->
+
+                <!--<md-button class="md-icon-button">-->
+                    <!--<md-icon>search</md-icon>-->
+                <!--</md-button>-->
+            <!--</md-toolbar>-->
+
+            <!--<md-table md-sort-type="desc" @select="onSelect" @sort="onSort">-->
+                <!--<md-table-header>-->
+                    <!--<md-table-row>-->
+                        <!--<md-table-head>#</md-table-head>-->
+                        <!--<md-table-head>Name</md-table-head>-->
+                        <!--<md-table-head>Done</md-table-head>-->
+                        <!--<md-table-head>Priority</md-table-head>-->
+                    <!--</md-table-row>-->
+                <!--</md-table-header>-->
+
+                <!--<md-table-body>-->
+                    <!--<md-table-row>-->
+                        <!--<md-table-cell>{{ index + from }}</md-table-cell>-->
+                        <!--<md-table-cell>{{ todo.name }}</md-table-cell>-->
+                        <!--<md-table-cell>{{ todo.done }}</md-table-cell>-->
+                        <!--<md-table-cell>{{ todo.priority }}</md-table-cell>-->
+                    <!--</md-table-row>-->
+                <!--</md-table-body>-->
+            <!--</md-table>-->
+
+            <!--<md-table-pagination-->
+                    <!--md-size="5"-->
+                    <!--md-total="10"-->
+                    <!--md-page="1"-->
+                    <!--md-label="Rows"-->
+                    <!--md-separator="of"-->
+                    <!--:md-page-options="[5, 10, 25, 50]"-->
+                    <!--@pagination="onPagination">-->
+            <!--</md-table-pagination>-->
+        <!--</md-table-card>-->
     </div>
 </template>
 <style>
@@ -35,7 +78,8 @@ export default {
   data () {
     return {
       todos: [],
-      authorized: false
+      authorized: false,
+      from: 0
     }
   },
   created () {
@@ -56,6 +100,7 @@ export default {
       this.$http.get('http://oauthserver.dev:8002/api/v1/task?page=' + page).then((response) => {
         console.log(response.data)
         this.todos = response.data.data
+        this.from = response.data.from
       }, (response) => {
         console.log(response.data)
       })
