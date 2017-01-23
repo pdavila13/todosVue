@@ -1,14 +1,14 @@
 <template>
     <div>
-        <!--<div v-show="!authorized">-->
-            <!--<md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>-->
-        <!--</div>-->
+        <div v-show="!authorized">
+            <md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>
+        </div>
 
         <div v-show="authorized">
             <md-button class="md-raised md-primary" @click="logout">LOGOUT</md-button>
         </div>
 
-        <md-list class="md-double-line" v-show="!authorized">
+        <md-list v-show="authorized" class="md-double-line">
             <md-subheader class="md-inset">Tasks</md-subheader>
 
             <md-list-item v-for="(todo, index) in todos">
