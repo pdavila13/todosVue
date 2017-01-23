@@ -1,16 +1,26 @@
 <template>
     <div>
-        <div v-show="!authorized">
-            <md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>
-        </div>
+        <!--<div v-show="!authorized">-->
+            <!--<md-button class="md-raised md-primary" @click="connect">CONNECT</md-button>-->
+        <!--</div>-->
+
         <div v-show="authorized">
             <md-button class="md-raised md-primary" @click="logout">LOGOUT</md-button>
         </div>
-        <ul v-show="authorized">
-            <li v-for="(todo, index) in todos">
-                {{ todo.name }}
-            </li>
-        </ul>
+
+        <md-list class="md-double-line" v-show="!authorized">
+            <md-subheader class="md-inset">Tasks</md-subheader>
+
+            <md-list-item v-for="(todo, index) in todos">
+                <md-icon>check_box_outline_blank</md-icon>
+
+                <div class="md-list-text-container">
+                    <span>{{ todo.name }}</span>
+                </div>
+
+                <md-switch v-model="done" id="done" name="done"></md-switch>
+            </md-list-item>
+        </md-list>
     </div>
 </template>
 <style>
