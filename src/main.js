@@ -13,11 +13,27 @@ window.axios = Axios
 window.querystring = querystring
 Vue.prototype.$http = Axios
 
-import routes from './routes'
+import routes from './routes.js'
 
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.auth) {
+    console.log('beforeEach')
+    console.log(to)
+    console.log(from)
+    var logged = false
+    if (logged) {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 
 Vue.use(VueMaterial)

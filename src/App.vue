@@ -34,7 +34,7 @@
 
       <md-list>
         <md-list-item @click="toggleLeftSidenav">
-          <md-icon>home</md-icon> <router-link to="/">Home</router-link>
+          <md-icon>face</md-icon> <router-link to="/profile">Profile</router-link>
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
