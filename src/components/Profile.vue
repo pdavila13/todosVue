@@ -42,6 +42,8 @@
 <style>
 </style>
 <script>
+import gravatar from 'gravatar'
+
 var STORAGE_KEY = 'todosvue_token'
 var API_PROFILE_URL = 'http://oauthserver.dev:8002/api/v1/user'
 
@@ -62,6 +64,9 @@ export default {
     this.fetchUserProfile()
   },
   methods: {
+    avatarUrl: function () {
+      return gravatar.url(this.email)
+    },
     fetchUserProfile: function () {
       this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem(STORAGE_KEY)
       this.$http.get(API_PROFILE_URL).then((response) => {
@@ -72,6 +77,7 @@ export default {
         this.email = response.data.email
         this.createAt = response.data.create_at
         this.updateAt = response.data.update_at
+        this.avatar = this.avatarUrl()
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
