@@ -9,27 +9,10 @@
     </md-toolbar>
 
     <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-      <md-toolbar class="md-account-header">
-        <md-list class="md-transparent">
-          <md-list-item class="md-avatar-list">
-            <md-avatar class="md-large">
-              <img src="https://s.gravatar.com/avatar/98c50dbb77309f0a27218fb97e6d6a01?s=80" alt="people">
-            </md-avatar>
-
-            <span style="flex: 1"></span>
-          </md-list-item>
-
-          <md-list-item>
-            <div class="md-list-text-container">
-              <span>Paolo Dávila</span>
-              <span>pdavila@iesebre.com</span>
-            </div>
-
-            <md-button class="md-icon-button md-list-action">
-              <md-icon>arrow_drop_down</md-icon>
-            </md-button>
-          </md-list-item>
-        </md-list>
+      <md-toolbar class="md-large">
+        <div class="md-toolbar-container">
+          <h3 class="md-title">Todos</h3>
+        </div>
       </md-toolbar>
 
       <md-list>

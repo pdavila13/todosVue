@@ -10,6 +10,8 @@
         </md-card-header>
 
         <md-card-content>
+            <md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
+
             <form novalidate @submit.stop.prevent="submit">
                 <md-input-container md-inline>
                     <label>Name</label>
@@ -23,12 +25,12 @@
 
                 <md-input-container>
                     <label>Create at</label>
-                    <md-input v-model="create_at" placeholder="Create_at"></md-input>
+                    <md-input v-model="createAt" placeholder="Create_at"></md-input>
                 </md-input-container>
 
                 <md-input-container>
                     <label>Update at</label>
-                    <md-input v-model="Update_at" placeholder="Update_at"></md-input>
+                    <md-input v-model="updateAt" placeholder="Update_at"></md-input>
                 </md-input-container>
             </form>
         </md-card-content>
@@ -76,7 +78,7 @@ export default {
         this.email = response.data.email
         this.createAt = response.data.create_at
         this.updateAt = response.data.update_at
-        this.gravatar = this.avatarUrl()
+        this.avatar = this.avatarUrl()
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
