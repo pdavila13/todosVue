@@ -37,18 +37,21 @@
             <md-button>Edit</md-button>
             <md-button>Delete</md-button>
         </md-card-actions>
+
+        <md-snackbar md-position="bottom center" ref="connectionError" md-duration="4000">
+            <span>Connection error. Please reconnect using connect button!.</span>
+        </md-snackbar>
     </md-card>
 </template>
 <style>
 </style>
 <script>
-var STORAGE_KEY = 'todosvue_token'
-var API_PROFILE_URL = 'http://oauthserver.dev:8002/api/v1/user'
+import todosVue from '../todosVue'
 
 export default {
   data () {
     return {
-      avatar: 'https://s.gravatar.com/avatar/98c50dbb77309f0a27218fb97e6d6a01?s=80',
+      avatar: 'https://s.gravatar.com/avatar/' + '98c50dbb77309f0a27218fb97e6d6a01' + '?s=80',
       id: null,
       name: null,
       email: null,
@@ -57,16 +60,18 @@ export default {
       connecting: true
     }
   },
+  computed: {
+    avatarHash: function () {
+      return '98c50dbb77309f0a27218fb97e6d6a01'
+    }
+  },
   create () {
-    console.log('Component profile created')
     this.fetchUserProfile()
   },
   methods: {
     fetchUserProfile: function () {
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem(STORAGE_KEY)
-      this.$http.get(API_PROFILE_URL).then((response) => {
+      this.$http.get(todosVue.API_PROFILE_URL).then((response) => {
         this.connecting = false
-        console.log(response.data)
         this.id = response.data.id
         this.name = response.data.name
         this.email = response.data.email
