@@ -15,10 +15,10 @@
             <md-table md-sort="name" md-sort-type="desc">
                 <md-table-header>
                     <md-table-row>
-                        <md-table-head md-numeric>ID</md-table-head>
-                        <md-table-head>Name</md-table-head>
-                        <md-table-head md-numeric>Priority</md-table-head>
-                        <md-table-head md-numeric>Done</md-table-head>
+                        <md-table-head md-sort-by="id" md-numeric md-tooltip="The id of the task.">ID</md-table-head>
+                        <md-table-head md-sort-by="name" md-tooltip="The name of the task.">Name</md-table-head>
+                        <md-table-head md-sort-by="priority" md-numeric md-tooltip="The priority for task">Priority</md-table-head>
+                        <md-table-head md-tooltip="Task is done?">Done</md-table-head>
                     </md-table-row>
                 </md-table-header>
 
@@ -26,7 +26,7 @@
 
                 <md-table-body>
                     <md-table-row v-for="(todo, index) in todos" :key="index">
-                        <md-table-cell>{{ index +1 }}</md-table-cell>
+                        <md-table-cell md-numeric>{{ index +1 }}</md-table-cell>
                         <md-table-cell>{{ todo.name }}</md-table-cell>
                         <md-table-cell md-numeric>{{ todo.priority }}</md-table-cell>
                         <md-table-cell>
@@ -87,7 +87,6 @@ export default{
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
-        this.authorized = false
       })
     },
     showConnectionError () {
