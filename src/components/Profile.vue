@@ -47,11 +47,12 @@
 </style>
 <script>
 import todosVue from '../todosVue'
+import gravatar from 'gravatar'
 
 export default {
   data () {
     return {
-      avatar: 'https://s.gravatar.com/avatar/' + '98c50dbb77309f0a27218fb97e6d6a01' + '?s=80',
+      avatar: '',
       id: null,
       name: null,
       email: null,
@@ -60,15 +61,13 @@ export default {
       connecting: true
     }
   },
-  computed: {
-    avatarHash: function () {
-      return '98c50dbb77309f0a27218fb97e6d6a01'
-    }
-  },
   create () {
     this.fetchUserProfile()
   },
   methods: {
+    avatarUrl: function () {
+      return gravatar.url(this.email)
+    },
     fetchUserProfile: function () {
       this.$http.get(todosVue.API_PROFILE_URL).then((response) => {
         this.connecting = false
@@ -77,6 +76,7 @@ export default {
         this.email = response.data.email
         this.createAt = response.data.create_at
         this.updateAt = response.data.update_at
+        this.gravatar = this.avatarUrl()
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
