@@ -48,6 +48,10 @@
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
+          <md-icon>info</md-icon> <router-link exact to="/device">Device Info</router-link>
+        </md-list-item>
+
+        <md-list-item @click="toggleLeftSidenav">
           <md-avatar>
             <img src="https://placeimg.com/40/40/people/5" alt="People">
           </md-avatar>

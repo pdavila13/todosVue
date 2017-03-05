@@ -2,6 +2,7 @@ import Todos from '../components/Todos'
 import Tokens from '../components/Tokens'
 import Profile from '../components/Profile'
 import Login from '../components/Login'
+import DeviceInfo from '../components/DeviceInfo'
 import NotFound from '../components/NotFound'
 
 const routes = [
@@ -23,6 +24,10 @@ const routes = [
   },
   { path: '/login',
     component: Login,
+    meta: { auth: false }
+  },
+  { path: '/device',
+    component: DeviceInfo,
     meta: { auth: false }
   },
   { path: '*',
