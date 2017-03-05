@@ -25,10 +25,10 @@
                 <md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
 
                 <md-table-body>
-                    <md-table-row v-for="(todo, index) in todos" md-auto-select md-selection>
+                    <md-table-row v-for="(todo, index) in todos" :key="index">
                         <md-table-cell>{{ index +1 }}</md-table-cell>
                         <md-table-cell>{{ todo.name }}</md-table-cell>
-                        <md-table-cell>{{ todo.priority }}</md-table-cell>
+                        <md-table-cell md-numeric>{{ todo.priority }}</md-table-cell>
                         <md-table-cell>
                             <md-switch v-model="todo.done" id="done" name="done"></md-switch>
                         </md-table-cell>
@@ -55,13 +55,13 @@
 <style>
 </style>
 <script>
-var API_URL = 'http://oauthserver.dev:8002/api/v1/task'
+import todosVue from '../todosVue'
 
 export default{
   data () {
     return {
       todos: [],
-      token: null,
+      connecting: true,
       total: 0,
       perPage: 0,
       page: 0
@@ -78,23 +78,23 @@ export default{
       return this.fetchPage(1)
     },
     fetchPage: function (page) {
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.token
-      // TODO: https://laracasts.com/discuss/channels/laravel/laravel-53-passport-cross-domain-error
-      // https://medium.com/@mshanak/solved-laravel-5-3-passport-with-cors-2c6667ef058b#.dbc3c9mcq
-
-      this.$http.get(API_URL + '?page=' + page).then((response) => {
+      this.$http.get(todosVue.API_TASK_URL + '?page=' + page).then((response) => {
+        this.connecting = false
         this.todos = response.data.data
         this.total = response.data.total
         this.perPage = response.data.per_page
         this.page = response.data.current_page
       }, (response) => {
-//        console.log('ERROR DATA: ' + response.data)
-//        this.showConnectionError()
-//        this.authorized = false
+        this.connecting = false
+        this.showConnectionError()
+        this.authorized = false
       })
     },
-    checkChanged: function (isChecked) {
-      console.log(isChecked)
+    showConnectionError () {
+      this.$refs.connectionError.open()
+    },
+    onPagination: function () {
+      console.log('pagination todo!')
     }
   }
 }
