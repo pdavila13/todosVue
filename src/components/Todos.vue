@@ -55,15 +55,13 @@
 <style>
 </style>
 <script>
-var STORAGE_KEY = 'todosvue_token'
 var API_URL = 'http://oauthserver.dev:8002/api/v1/task'
 
 export default{
   data () {
     return {
       todos: [],
-      authorized: false,
-      connecting: true,
+      token: null,
       total: 0,
       perPage: 0,
       page: 0
@@ -73,7 +71,6 @@ export default{
     var that = this
     setTimeout(function () {
       that.fetchData()
-      that.connecting = false
     }, 500)
   },
   methods: {
@@ -81,28 +78,23 @@ export default{
       return this.fetchPage(1)
     },
     fetchPage: function (page) {
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem(STORAGE_KEY)
+      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.token
       // TODO: https://laracasts.com/discuss/channels/laravel/laravel-53-passport-cross-domain-error
       // https://medium.com/@mshanak/solved-laravel-5-3-passport-with-cors-2c6667ef058b#.dbc3c9mcq
 
       this.$http.get(API_URL + '?page=' + page).then((response) => {
         this.todos = response.data.data
-        console.log(response.data)
-        console.log(typeof response.data.total)
         this.total = response.data.total
         this.perPage = response.data.per_page
         this.page = response.data.current_page
       }, (response) => {
-        console.log('ERROR DATA: ' + response.data)
-        this.showConnectionError()
-        this.authorized = false
+//        console.log('ERROR DATA: ' + response.data)
+//        this.showConnectionError()
+//        this.authorized = false
       })
     },
-    showConnectionError () {
-      this.$refs.connectionError.open()
-    },
-    onPagination: function () {
-      console.log('pagination todo!')
+    checkChanged: function (isChecked) {
+      console.log(isChecked)
     }
   }
 }
