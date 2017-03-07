@@ -30,6 +30,21 @@ if (auth.loggedIn()) {
 Vue.use(VueMaterial)
 Vue.use(VueRouter)
 
+/* vue-material themes */
+Vue.material.registerTheme('custon', {
+  primary: {
+    color: 'red',
+    hue: 'A200'
+  },
+  accent: {
+    color: 'blue',
+    hue: '300'
+  }
+})
+
+/* Apply theme */
+Vue.material.setCurrentTheme('custon')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
