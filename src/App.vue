@@ -79,6 +79,9 @@ export default {
     },
     close (ref) {
       console.log('Closed: ' + ref)
+    },
+    created () {
+      console.log(window.location.href)
     }
   }
 }
