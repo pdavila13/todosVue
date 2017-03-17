@@ -34,15 +34,20 @@
 
       <md-list>
         <md-list-item @click="toggleLeftSidenav">
-          <md-icon>face</md-icon> <router-link exact to="/profile">Profile</router-link>
+          <md-icon>exit_to_app</md-icon>
+          <router-link exact to="login">Login/Logout</router-link>
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
-          <md-icon>move_to_inbox</md-icon> <router-link exact to="/todos">Todos</router-link>
+          <md-icon>face</md-icon> <router-link exact to="profile">Profile</router-link>
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
-          <md-icon>https</md-icon> <router-link exact to="/tokens">Tokens</router-link>
+          <md-icon>move_to_inbox</md-icon> <router-link exact to="todos">Todos</router-link>
+        </md-list-item>
+
+        <md-list-item @click="toggleLeftSidenav">
+          <md-icon>https</md-icon> <router-link exact to="tokens">Tokens</router-link>
 
           <md-divider class="md-inset"></md-divider>
         </md-list-item>
@@ -85,7 +90,7 @@ export default {
 </script>
 
 <style>
-a {
+a:link {
   color: inherit;
   text-decoration: none;
 }
