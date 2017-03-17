@@ -9,6 +9,9 @@ import VueRouter from 'vue-router'
 import Axios from 'axios'
 import querystring from 'querystring'
 
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import 'material-design-icons/iconfont/material-icons.css'
+
 import auth from './services/auth'
 import router from './services/router'
 

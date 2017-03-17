@@ -30,7 +30,16 @@
                         <md-table-cell>{{ todo.name }}</md-table-cell>
                         <md-table-cell md-numeric>{{ todo.priority }}</md-table-cell>
                         <md-table-cell>
-                            <md-switch v-model="todo.done" id="done" name="done"></md-switch>
+                            <md-switch v-model="todo.done" id="done" name="done" class="md-primary"></md-switch>
+                        </md-table-cell>
+
+                        <md-table-cell>
+                            <md-button class="md-raised md-primary">
+                                <md-icon>edit</md-icon>
+                            </md-button>
+                            <md-button class="md-raised md-accent">
+                                <md-icon>delete</md-icon>
+                            </md-button>
                         </md-table-cell>
                     </md-table-row>
                 </md-table-body>
@@ -43,7 +52,7 @@
                     md-label="Rows"
                     md-separator="of"
                     :md-page-options="[5, 15, 25, 50]"
-                    @pagination="onPagination">
+                    @pagination="fetchPage(page)">
             </md-table-pagination>
         </md-table-card>
 
@@ -61,7 +70,7 @@ export default{
   data () {
     return {
       todos: [],
-      connecting: true,
+      connecting: false,
       total: 0,
       perPage: 0,
       page: 0

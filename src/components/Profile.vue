@@ -10,6 +10,8 @@
         </md-card-header>
 
         <md-card-content>
+            <md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
+
             <form novalidate @submit.stop.prevent="submit">
                 <md-input-container md-inline>
                     <label>Name</label>
@@ -23,12 +25,12 @@
 
                 <md-input-container>
                     <label>Create at</label>
-                    <md-input v-model="create_at" placeholder="Create_at"></md-input>
+                    <md-input v-model="createAt" placeholder="Create_at"></md-input>
                 </md-input-container>
 
                 <md-input-container>
                     <label>Update at</label>
-                    <md-input v-model="Update_at" placeholder="Update_at"></md-input>
+                    <md-input v-model="updateAt" placeholder="Update_at"></md-input>
                 </md-input-container>
             </form>
         </md-card-content>
@@ -47,11 +49,12 @@
 </style>
 <script>
 import todosVue from '../todosVue'
+import gravatar from 'gravatar'
 
 export default {
   data () {
     return {
-      avatar: 'https://s.gravatar.com/avatar/' + '98c50dbb77309f0a27218fb97e6d6a01' + '?s=80',
+      avatar: '',
       id: null,
       name: null,
       email: null,
@@ -60,15 +63,13 @@ export default {
       connecting: true
     }
   },
-  computed: {
-    avatarHash: function () {
-      return '98c50dbb77309f0a27218fb97e6d6a01'
-    }
-  },
   create () {
     this.fetchUserProfile()
   },
   methods: {
+    avatarUrl: function () {
+      return gravatar.url(this.email)
+    },
     fetchUserProfile: function () {
       this.$http.get(todosVue.API_PROFILE_URL).then((response) => {
         this.connecting = false
@@ -77,6 +78,7 @@ export default {
         this.email = response.data.email
         this.createAt = response.data.create_at
         this.updateAt = response.data.update_at
+        this.avatar = this.avatarUrl()
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
