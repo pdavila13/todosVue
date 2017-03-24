@@ -22,7 +22,7 @@
                     </md-table-row>
                 </md-table-header>
 
-                <md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
+                <md-spinner :md-size="20" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
 
                 <md-table-body>
                     <md-table-row v-for="(todo, index) in todos" :key="index">

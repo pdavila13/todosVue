@@ -10,7 +10,7 @@
         </md-card-header>
 
         <md-card-content>
-            <!--<md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting"></md-spinner>-->
+            <md-spinner :md-size="20" md-indeterminate  class="md-accent" v-show="connecting"></md-spinner>
             <form novalidate @submit.stop.prevent="submit">
                 <md-input-container md-inline>
                     <label>Name</label>
