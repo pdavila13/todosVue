@@ -43,6 +43,10 @@
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
+            <md-icon>devices</md-icon> <router-link exact to="/device">Device</router-link>
+        </md-list-item>
+
+        <md-list-item @click="toggleLeftSidenav">
           <md-icon>move_to_inbox</md-icon> <router-link exact to="todos">Todos</router-link>
         </md-list-item>
 
@@ -73,9 +77,19 @@
 </template>
 
 <script>
+import notifications from './services/notifications'
+
 export default {
   name: 'app',
+  created () {
+    console.log(window.location.href)
+    document.addEventListener('devicesready', this.onDeviceReady, false)
+  },
   methods: {
+    onDeviceReady () {
+      console.log('Working on platform: ' + window.device.platform)
+      notifications.enable()
+    },
     toggleLeftSidenav () {
       this.$refs.leftSidenav.toggle()
     },
