@@ -15,20 +15,20 @@
             <md-table md-sort="name" md-sort-type="desc">
                 <md-table-header>
                     <md-table-row>
-                        <md-table-head md-numeric>ID</md-table-head>
-                        <md-table-head>Name</md-table-head>
-                        <md-table-head md-numeric>Priority</md-table-head>
-                        <md-table-head md-numeric>Done</md-table-head>
+                        <md-table-head md-sort-by="id" md-numeric md-tooltip="The id of the task.">ID</md-table-head>
+                        <md-table-head md-sort-by="name" md-tooltip="The name of the task.">Name</md-table-head>
+                        <md-table-head md-sort-by="priority" md-numeric md-tooltip="The priority for task">Priority</md-table-head>
+                        <md-table-head md-tooltip="Task is done?">Done</md-table-head>
                     </md-table-row>
                 </md-table-header>
 
                 <md-spinner :md-size="150" md-indeterminate  class="md-accent" v-show="connecting" ></md-spinner>
 
                 <md-table-body>
-                    <md-table-row v-for="(todo, index) in todos" md-auto-select md-selection>
-                        <md-table-cell>{{ index +1 }}</md-table-cell>
+                    <md-table-row v-for="(todo, index) in todos" :key="index">
+                        <md-table-cell md-numeric>{{ index +1 }}</md-table-cell>
                         <md-table-cell>{{ todo.name }}</md-table-cell>
-                        <md-table-cell>{{ todo.priority }}</md-table-cell>
+                        <md-table-cell md-numeric>{{ todo.priority }}</md-table-cell>
                         <md-table-cell>
                             <md-switch v-model="todo.done" id="done" name="done"></md-switch>
                         </md-table-cell>
@@ -55,14 +55,12 @@
 <style>
 </style>
 <script>
-var STORAGE_KEY = 'todosvue_token'
-var API_URL = 'http://oauthserver.dev:8002/api/v1/task'
+import todosVue from '../todosVue'
 
 export default{
   data () {
     return {
       todos: [],
-      authorized: false,
       connecting: true,
       total: 0,
       perPage: 0,
@@ -73,7 +71,6 @@ export default{
     var that = this
     setTimeout(function () {
       that.fetchData()
-      that.connecting = false
     }, 500)
   },
   methods: {
@@ -81,21 +78,15 @@ export default{
       return this.fetchPage(1)
     },
     fetchPage: function (page) {
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + window.localStorage.getItem(STORAGE_KEY)
-      // TODO: https://laracasts.com/discuss/channels/laravel/laravel-53-passport-cross-domain-error
-      // https://medium.com/@mshanak/solved-laravel-5-3-passport-with-cors-2c6667ef058b#.dbc3c9mcq
-
-      this.$http.get(API_URL + '?page=' + page).then((response) => {
+      this.$http.get(todosVue.API_TASK_URL + '?page=' + page).then((response) => {
+        this.connecting = false
         this.todos = response.data.data
-        console.log(response.data)
-        console.log(typeof response.data.total)
         this.total = response.data.total
         this.perPage = response.data.per_page
         this.page = response.data.current_page
       }, (response) => {
-        console.log('ERROR DATA: ' + response.data)
+        this.connecting = false
         this.showConnectionError()
-        this.authorized = false
       })
     },
     showConnectionError () {

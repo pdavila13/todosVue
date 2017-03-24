@@ -22,11 +22,8 @@
 <style>
 </style>
 <script>
-var STORAGE_KEY = 'todosvue_token'
-var AUTH_CLIENT_ID = 2
-var AUTH_REDIRECT_URI = 'http://localhost:8090/login'
-var OAUTH_SERVER_URL = 'http://oauthserver.dev:8002/oauth/authorize?'
-
+import todosVue from '../todosVue'
+import auth from '../services/auth'
 export default{
   data () {
     return {
@@ -35,39 +32,51 @@ export default{
   },
   created () {
     if (document.location.hash) var token = this.extractToken(document.location.hash)
-    if (token) this.saveToken(token)
-    if (this.token == null) this.token = this.fetchToken()
+    if (token) auth.saveToken(token)
+    if (this.token == null) this.token = auth.getToken()
     if (this.token) {
       this.authorized = true
+      this.$http.defaults.headers.common['Authorization'] = auth.getAuthHeader()
     } else {
       this.authorized = false
+      this.$http.defaults.headers.common['Authorization'] = ''
     }
   },
   methods: {
     extractToken: function (hash) {
       return hash.match(/#(?:access_token)=([\S\s]*?)&/)[1]
     },
-    saveToken: function (token) {
-      window.localStorage.setItem(STORAGE_KEY, token)
-    },
-    fetchToken: function () {
-      return window.localStorage.getItem(STORAGE_KEY)
-    },
     login: function () {
       query = {
-        client_id: AUTH_CLIENT_ID,
-        redirect_uri: AUTH_REDIRECT_URI,
+        client_id: todosVue.OAUTH_CLIENT_ID,
+        redirect_uri: todosVue.OAUTH_REDIRECT_URI,
         response_type: 'token',
         scope: ''
       }
       var query = window.querystring.stringify(query)
-      window.location.replace(OAUTH_SERVER_URL + query)
+      if (window.cordova && window.device.platform !== 'browser') {
+        var oAuthWindow = window.cordova.InAppBrowser.open(todosVue.OAUTH_SERVER_URL + query, '_blank', 'location=yes')
+
+        var login = this
+        oAuthWindow.addEventListener('loadstart', function (e) {
+          var url = e.url
+          var hash = url.split('#')[1]
+          var accessToken = login.extractToken('#' + String(hash))
+          if (accessToken) {
+            auth.saveToken(accessToken)
+            login.authorized = true
+            oAuthWindow.close()
+          }
+        })
+      } else {
+        window.location.replace(todosVue.OAUTH_SERVER_URL + query)
+      }
     },
     initLogout: function () {
       this.openDialog('sureToLogout')
     },
     logout: function () {
-      window.localStorage.removeItem(STORAGE_KEY)
+      window.localStorage.removeItem(todosVue.STORAGE_TOKEN_KEY)
       this.authorized = false
     },
     openDialog: function (ref) {
