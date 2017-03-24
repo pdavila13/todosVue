@@ -3,6 +3,7 @@ import Tokens from '../components/Tokens'
 import Profile from '../components/Profile'
 import Login from '../components/Login'
 import NotFound from '../components/NotFound'
+import DeviceInfo from '../components/DeviceInfo'
 import Cordova from '../components/Cordova'
 
 const routes = [
@@ -25,6 +26,10 @@ const routes = [
   { path: '/login',
     component: Login,
     meta: { auth: false }
+  },
+  { path: '/device',
+    component: DeviceInfo,
+    meta: { auth: true }
   },
   { path: '/cordova',
     component: Cordova,
