@@ -32,42 +32,44 @@
         </md-list>
       </md-toolbar>
 
-      <md-list>
-        <md-list-item @click="toggleLeftSidenav">
-          <md-icon>exit_to_app</md-icon>
-          <router-link exact to="login">Login/Logout</router-link>
-        </md-list-item>
+      <div class="main-sidebar-links">
+        <md-list class="md-dense">
+          <md-list-item @click="toggleLeftSidenav">
+            <md-icon>exit_to_app</md-icon>
+            <router-link exact to="login">Login/Logout</router-link>
+          </md-list-item>
 
-        <md-list-item @click="toggleLeftSidenav">
-          <md-icon>face</md-icon> <router-link exact to="profile">Profile</router-link>
-        </md-list-item>
+          <md-list-item @click="toggleLeftSidenav">
+            <md-icon>face</md-icon> <router-link exact to="profile">Profile</router-link>
+          </md-list-item>
 
-        <md-list-item @click="toggleLeftSidenav">
+          <md-list-item @click="toggleLeftSidenav">
             <md-icon>devices</md-icon> <router-link exact to="/device">Device</router-link>
-        </md-list-item>
+          </md-list-item>
 
-        <md-list-item @click="toggleLeftSidenav">
-          <md-icon>move_to_inbox</md-icon> <router-link exact to="todos">Todos</router-link>
-        </md-list-item>
+          <md-list-item @click="toggleLeftSidenav">
+            <md-icon>move_to_inbox</md-icon> <router-link exact to="todos">Todos</router-link>
+          </md-list-item>
 
-        <md-list-item @click="toggleLeftSidenav">
-          <md-icon>https</md-icon> <router-link exact to="tokens">Tokens</router-link>
+          <md-list-item @click="toggleLeftSidenav">
+            <md-icon>https</md-icon> <router-link exact to="tokens">Tokens</router-link>
 
-          <md-divider class="md-inset"></md-divider>
-        </md-list-item>
+            <md-divider class="md-inset"></md-divider>
+          </md-list-item>
 
-        <md-list-item @click="toggleLeftSidenav">
-          <md-avatar>
-            <img src="https://placeimg.com/40/40/people/5" alt="People">
-          </md-avatar>
+          <md-list-item @click="toggleLeftSidenav">
+            <md-avatar>
+              <img src="https://placeimg.com/40/40/people/5" alt="People">
+            </md-avatar>
 
-          <span>Abbey Christansen</span>
+            <span>Abbey Christansen</span>
 
-          <md-button class="md-icon-button md-list-action">
-            <md-icon class="md-primary">chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
-      </md-list>
+            <md-button class="md-icon-button md-list-action">
+              <md-icon class="md-primary">chat_bubble</md-icon>
+            </md-button>
+          </md-list-item>
+        </md-list>
+      </div>
     </md-sidenav>
 
     <router-view>
