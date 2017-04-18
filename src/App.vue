@@ -26,10 +26,6 @@
         </md-list-item>
 
         <md-list-item @click="toggleLeftSidenav">
-            <md-icon>devices</md-icon> <router-link exact to="/device">Device</router-link>
-        </md-list-item>
-
-        <md-list-item @click="toggleLeftSidenav">
           <md-icon>move_to_inbox</md-icon> <router-link exact to="todos">Todos</router-link>
         </md-list-item>
 
