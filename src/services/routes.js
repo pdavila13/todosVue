@@ -4,7 +4,6 @@ import Profile from '../components/Profile'
 import Login from '../components/Login'
 import DeviceInfo from '../components/DeviceInfo'
 import NotFound from '../components/NotFound'
-import DeviceInfo from '../components/DeviceInfo'
 import Cordova from '../components/Cordova'
 
 const routes = [
