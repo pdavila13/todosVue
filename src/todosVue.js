@@ -4,7 +4,12 @@ const todosVue = {
   OAUTH_REDIRECT_URI: 'http://localhost:8090/login',
   OAUTH_SERVER_URL: 'http://todosbackend.pdavila.2dam.acacha.org/oauth/authorize?',
   API_TASK_URL: 'http://todosbackend.pdavila.2dam.acacha.org/api/v1/task',
-  API_PROFILE_URL: 'http://todosbackend.pdavila.2dam.acacha.org/api/v1/user'
+  API_PROFILE_URL: 'http://todosbackend.pdavila.2dam.acacha.org/api/v1/user',
+  LATITUDE: 'latitude',
+  LONGITUDE: 'longitude',
+  ANDROID_SENDER_ID: '925822830182',
+  REGISTER_GCM_TOKEN_URL: 'http://todosbackend.pdavila.2dam.acacha.org/api/v1/user/gcmtoken',
+  GET_MESSAGES_URL: 'http://todosbackend.pdavila.2dam.acacha.org/api/v1/user/messages'
 }
 
 export default todosVue
