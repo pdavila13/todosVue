@@ -2,9 +2,8 @@
     <vue-pull-refresh :on-refresh="onRefresh" :config="PulltoRefreshConfig">
         <div>
             <div align="center">
-                <md-spinner :md-size="300" md-indeterminate class="md-accent" v-show="connecting"></md-spinner>
+                <md-spinner :md-size="300" md-indeterminate v-show="connecting"></md-spinner>
             </div>
-
             <md-card md-with-hover>
                 <md-card-header>
                     <md-avatar>
@@ -20,39 +19,31 @@
                         <md-input-container>
                             <md-icon>person</md-icon>
                             <label>Name</label>
-                            <md-input v-model="name" placeholder="Name"></md-input>
+                            <md-input v-model="name" placeholder="Put your name here"></md-input>
                         </md-input-container>
 
                         <md-input-container>
                             <md-icon>email</md-icon>
                             <label>Email</label>
-                            <md-input v-model="email" placeholder="Email"></md-input>
-                        </md-input-container>
-
-                        <md-input-container>
-                            <md-icon>phone</md-icon>
-                            <label>Phone Number</label>
-                            <md-input v-model="phone" placeholder="Put your Phone here"></md-input>
+                            <md-input v-model="email" placeholder="Put your email here"></md-input>
                         </md-input-container>
 
                         <md-input-container>
                             <md-icon>date_range</md-icon>
                             <label>Created at</label>
-                            <md-input v-model="createdAt" placeholder="Create at"></md-input>
+                            <md-input v-model="createdAt" placeholder="Date here"></md-input>
                         </md-input-container>
 
                         <md-input-container>
                             <md-icon>date_range</md-icon>
                             <label>Updated at</label>
-                            <md-input v-model="updatedAt" placeholder="Updated at"></md-input>
+                            <md-input v-model="updatedAt" placeholder="Date here"></md-input>
                         </md-input-container>
                     </form>
-
                     <md-button class="md-raised md-primary">
                         <router-link exact to="/tokens" class="md-button">Show Token</router-link>
                     </md-button>
                 </md-card-content>
-
                 <md-card-content>
                     <md-input-container>
                         <md-icon>location_on</md-icon>
@@ -80,8 +71,9 @@
                         <md-icon>assignment_ind</md-icon>
                         <span class="md-subheading">Change Avatar</span>
                     </md-button>
+                    <!--<md-button>Edit</md-button>-->
+                    <!--<md-button>Delete</md-button>-->
                 </md-card-actions>
-
                 <md-snackbar md-position="bottom center" ref="connectionError" md-duration="4000">
                     <span>Connection error. Please reconnect using connect button!.</span>
                 </md-snackbar>
@@ -104,108 +96,105 @@
 <style>
 </style>
 <script>
-import auth from '../services/auth'
-import profileMixin from '../Mixins/ProfileMixin'
-
-export default{
-  mixins: [profileMixin],
-  data () {
-    return {
-      avatar: '',
-      id: null,
-      name: null,
-      email: null,
-      createdAt: null,
-      updatedAt: null,
-      connecting: true,
-      phone: 666666666,
-      latitude: auth.getLatitude(),
-      longitude: auth.getLongitude()
-    }
-  },
-  created () {
-    document.addEventListener('deviceready', this.onDeviceReady, false)
-    this.$material.setCurrentTheme('profile')
-  },
-  beforeDestroy () {
-    document.removeEventListener('deviceready', this.onBeforeDestroy, false)
-  },
-  methods: {
-    onDeviceReady: function () {
-      console.log('Device Ready')
-    },
-    onSaveUserPhone: function () {
-      if (!navigator.contacts) {
-        this.$refs.contactsError.open()
-      }
-      navigator.notification.confirm(
-        'Do You Want Save',
-        this.onConfirmSaveUser,
-        'Save User Phone',
-        'OK,Cancel'
-      )
-    },
-    onConfirmSaveUser (button) {
-      if (button === 1) {
-        var contact = navigator.contacts.create()
-        contact.name = this.name
-        contact.displayName = this.name
-        contact.emails = this.email
-        var phoneNumbers = []
-        phoneNumbers[0] = new window.ContactField('mobile', this.phone, true)
-        contact.phoneNumbers = phoneNumbers
-        contact.save()
+  import auth from '../services/auth'
+  import profileMixin from '../Mixins/ProfileMixin'
+  export default{
+    mixins: [profileMixin],
+    data () {
+      return {
+        avatar: '',
+        id: null,
+        name: null,
+        email: null,
+        createdAt: null,
+        updatedAt: null,
+        connecting: true,
+        latitude: auth.getLatitude(),
+        longitude: auth.getLongitude()
       }
     },
-    onSaveLocation: function () {
-      if (!navigator.geolocation) {
-        this.$refs.geolocationError.open()
-      }
-      navigator.notification.confirm(
-        'Do You Want Save',
-        this.onConfirmSaveLocation,
-        'Save Geolocation',
-        'OK,Cancel'
-      )
+    created () {
+      document.addEventListener('deviceready', this.onDeviceReady, false)
     },
-    onConfirmSaveLocation (button) {
-      if (button === 1) {
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            auth.saveLatitude(position.coords.latitude)
-            auth.saveLongitude(position.coords.longitude)
-          })
-      }
+    beforeDestroy () {
+      document.removeEventListener('deviceready', this.onBeforeDestroy, false)
     },
-    onChangeAvatar: function () {
-      if (!navigator.camera) {
-        this.$refs.cameraError.open()
+    methods: {
+      onDeviceReady: function () {
+        console.log('Device Ready')
+      },
+      onSaveUserPhone: function () {
+        if (!navigator.contacts) {
+          this.$refs.contactsError.open()
+        }
+        navigator.notification.confirm(
+          'Do You Want Save',
+          this.onConfirmSaveUser,
+          'Save User Phone',
+          'OK,Cancel'
+        )
+      },
+      onConfirmSaveUser (button) {
+        if (button === 1) {
+          var contact = navigator.contacts.create()
+          contact.name = this.name
+          contact.displayName = this.name
+          contact.emails = this.email
+          var phoneNumbers = []
+          phoneNumbers[0] = new window.ContactField('mobile', this.phone, true)
+          contact.phoneNumbers = phoneNumbers
+          contact.save()
+        }
+      },
+      onSaveLocation: function () {
+        if (!navigator.geolocation) {
+          this.$refs.geolocationError.open()
+        }
+        navigator.notification.confirm(
+          'Do You Want Save',
+          this.onConfirmSaveLocation,
+          'Save Geolocation',
+          'OK,Cancel'
+        )
+      },
+      onConfirmSaveLocation (button) {
+        if (button === 1) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              auth.saveLatitude(position.coords.latitude)
+              auth.saveLongitude(position.coords.longitude)
+            })
+        }
+      },
+      onChangeAvatar: function () {
+        if (!navigator.camera) {
+          this.$refs.cameraError.open()
+        }
+        var options = {
+          quality: 50,
+          destinationType: window.Camera.DestinationType.DATA_URL,
+          sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+          encodingType: 0     // 0=JPG 1=PNG
+        }
+        var avatar = this
+        navigator.camera.getPicture(
+          function (imgData) {
+            avatar.avatar = 'data:image/jpeg;base64,' + imgData
+            avatar.openDialog('ChangeAvatar')
+          },
+          function () {
+            navigator.notification.alert(
+              'Error Change Avatar',    // message
+              null,                     // callback
+              'Avatar',                 // title
+              'OK'
+            )
+          }, options)
+        return false
+      },
+      onBeforeDestroy () {
+        console.log('Device onBeforeDestroy!')
       }
-      var options = {
-        quality: 50,
-        destinationType: window.Camera.DestinationType.DATA_URL,
-        sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
-        encodingType: 0     // 0=JPG 1=PNG
-      }
-      var avatar = this
-      navigator.camera.getPicture(
-        function (imgData) {
-          avatar.avatar = 'data:image/jpeg;base64,' + imgData
-          avatar.openDialog('ChangeAvatar')
-        },
-        function () {
-          navigator.notification.alert(
-            'Error Change Avatar',    // message
-            null,                     // callback
-            'Avatar',                 // title
-            'OK'
-          )
-        }, options)
-      return false
-    },
-    onBeforeDestroy () {
-      console.log('Device onBeforeDestroy!')
     }
   }
-}
 </script>

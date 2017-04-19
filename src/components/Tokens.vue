@@ -9,19 +9,19 @@
                     <md-input-container>
                         <md-icon>person</md-icon>
                         <label>Name</label>
-                        <md-input v-model="name" placeholder="Your Name" disabled></md-input>
+                        <md-input v-model="name" placeholder="Name" disabled></md-input>
                     </md-input-container>
 
                     <md-input-container>
                         <md-icon>mail</md-icon>
                         <label>Email</label>
-                        <md-input v-model="email" placeholder="Your Email" disabled></md-input>
+                        <md-input v-model="email" placeholder="Email" disabled></md-input>
                     </md-input-container>
 
                     <md-input-container>
                         <md-icon>lock</md-icon>
                         <label>Your Token</label>
-                        <md-textarea v-model="token" placeholder="Your Token" disabled></md-textarea>
+                        <md-textarea v-model="token" placeholder="Token" disabled></md-textarea>
                     </md-input-container>
 
                     <md-button class="md-raised md-primary"><router-link exact to="/profile" class="md-button">Return to Profile</router-link></md-button>
