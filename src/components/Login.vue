@@ -5,8 +5,8 @@
         </md-card-header>
 
         <md-card-content>
-            <md-button v-show="!authorized" class="md-raised md-primary" @click="login">Login</md-button>
-            <md-button v-show="authorized" class="md-raised md-primary" @click="initLogout">Logout</md-button>
+            <md-button class="md-raised md-primary" @click.native="login" v-show="!authorized">Login</md-button>
+            <md-button class="md-raised md-primary" @click.native="initLogout" v-show="authorized">Logout</md-button>
         </md-card-content>
 
         <md-dialog-confirm
@@ -60,12 +60,19 @@ export default{
         var login = this
         oAuthWindow.addEventListener('loadstart', function (e) {
           var url = e.url
-          var hash = url.split('#')[1]
-          var accessToken = login.extractToken('#' + String(hash))
-          if (accessToken) {
-            auth.saveToken(accessToken)
-            login.authorized = true
-            oAuthWindow.close()
+          var hash = null
+
+          if (url.split('#')[1]) {
+            hash = url.split('#')[1]
+          }
+
+          if (hash) {
+            var accessToken = login.extractToken('#' + String(hash))
+            if (accessToken) {
+              auth.saveToken(accessToken)
+              login.authorized = true
+              oAuthWindow.close()
+            }
           }
         })
       } else {

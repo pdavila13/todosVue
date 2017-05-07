@@ -10,7 +10,7 @@
                         <img :src="avatar" :alt="name">
                     </md-avatar>
 
-                    <div class="md-title">{{ id }} {{ name }}</div>
+                    <div class="md-title">{{ id }} - {{ name }}</div>
                     <div class="md-subhead">{{ email }}</div>
                 </md-card-header>
 
