@@ -5,19 +5,20 @@ import App from './App'
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
+
+import 'material-design-icons/iconfont/material-icons.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+
 import VueRouter from 'vue-router'
 import Axios from 'axios'
 import querystring from 'querystring'
-
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
-import 'material-design-icons/iconfont/material-icons.css'
-
 import auth from './services/auth'
-import router from './services/router'
 
-window.querystring = querystring
+import 'fastclick/lib/fastclick'
+import 'animate.css/animate.css'
 
 window.axios = Axios
+window.querystring = querystring
 Vue.prototype.$http = Axios
 
 window.axios.defaults.headers.common = {
@@ -29,6 +30,8 @@ if (auth.loggedIn()) {
     'Authorization': auth.getAuthHeader()
   }
 }
+
+import router from './services/router'
 
 Vue.use(VueMaterial)
 Vue.use(VueRouter)

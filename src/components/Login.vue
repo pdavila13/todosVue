@@ -30,18 +30,6 @@ export default{
       authorized: false
     }
   },
-  created () {
-    if (document.location.hash) var token = this.extractToken(document.location.hash)
-    if (token) auth.saveToken(token)
-    if (this.token == null) this.token = auth.getToken()
-    if (this.token) {
-      this.authorized = true
-      this.$http.defaults.headers.common['Authorization'] = auth.getAuthHeader()
-    } else {
-      this.authorized = false
-      this.$http.defaults.headers.common['Authorization'] = ''
-    }
-  },
   methods: {
     extractToken: function (hash) {
       return hash.match(/#(?:access_token)=([\S\s]*?)&/)[1]
@@ -61,11 +49,9 @@ export default{
         oAuthWindow.addEventListener('loadstart', function (e) {
           var url = e.url
           var hash = null
-
           if (url.split('#')[1]) {
             hash = url.split('#')[1]
           }
-
           if (hash) {
             var accessToken = login.extractToken('#' + String(hash))
             if (accessToken) {
@@ -82,15 +68,27 @@ export default{
     initLogout: function () {
       this.openDialog('sureToLogout')
     },
+    openDialog: function (ref) {
+      this.$refs[ref].open()
+    },
     logout: function () {
       window.localStorage.removeItem(todosVue.STORAGE_TOKEN_KEY)
       this.authorized = false
     },
-    openDialog: function (ref) {
-      this.$refs[ref].open()
-    },
     onCloseSureToLogout: function (type) {
       if (type === 'ok') this.logout()
+    }
+  },
+  created () {
+    if (document.location.hash) var token = this.extractToken(document.location.hash)
+    if (token) auth.saveToken(token)
+    if (this.token == null) this.token = auth.getToken()
+    if (this.token) {
+      this.authorized = true
+      this.$http.defaults.headers.common['Authorization'] = auth.getAuthHeader()
+    } else {
+      this.authorized = false
+      this.$http.defaults.headers.common['Authorization'] = ''
     }
   }
 }

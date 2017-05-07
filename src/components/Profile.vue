@@ -60,15 +60,15 @@
 
                 <md-card-actions>
                     <md-button @click.native="onSaveUserPhone">
-                        <md-icon>save</md-icon>
-                        <span class="md-subheading">Get Contact</span>
+                        <md-icon>contacts</md-icon>
+                        <span class="md-subheading">Contact</span>
                     </md-button>
                     <md-button @click.native="onSaveLocation">
-                        <md-icon>location_on</md-icon>
-                        <span class="md-subheading">Get Location</span>
+                        <md-icon>add_location</md-icon>
+                        <span class="md-subheading">Location</span>
                     </md-button>
                     <md-button @click.native="onChangeAvatar">
-                        <md-icon>assignment_ind</md-icon>
+                        <md-icon>person_pin</md-icon>
                         <span class="md-subheading">Change Avatar</span>
                     </md-button>
                     <!--<md-button>Edit</md-button>-->
@@ -109,8 +109,8 @@
         createdAt: null,
         updatedAt: null,
         connecting: true,
-        latitude: auth.getLatitude(),
-        longitude: auth.getLongitude()
+        latitude: '',
+        longitude: ''
       }
     },
     created () {
@@ -118,6 +118,10 @@
     },
     beforeDestroy () {
       document.removeEventListener('deviceready', this.onBeforeDestroy, false)
+    },
+    mounted () {
+      this.latitude = auth.getLatitude()
+      this.longitude = auth.getLongitude()
     },
     methods: {
       onDeviceReady: function () {
@@ -163,6 +167,8 @@
             function (position) {
               auth.saveLatitude(position.coords.latitude)
               auth.saveLongitude(position.coords.longitude)
+              this.latitude = auth.getLatitude()
+              this.longitude = auth.getLongitude()
             })
         }
       },

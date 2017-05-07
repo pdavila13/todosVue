@@ -1,48 +1,52 @@
 <template>
     <div>
-        <form novalidate>
-            <md-input-container>
-                <md-icon>remove_from_queue</md-icon>
-                <label>Cordova</label>
-                <md-input v-model="cordova" disabled></md-input>
-            </md-input-container>
+        <md-card md-with-hover>
+            <md-card-content>
+                <form novalidate>
+                    <md-input-container>
+                        <md-icon>remove_from_queue</md-icon>
+                        <label>Cordova</label>
+                        <md-input v-model="cordova" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>input</md-icon>
-                <label>Model</label>
-                <md-input v-model="model" disabled></md-input>
-            </md-input-container>
+                    <md-input-container>
+                        <md-icon>input</md-icon>
+                        <label>Model</label>
+                        <md-input v-model="model" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>android</md-icon>
-                <label>Platform</label>
-                <md-input v-model="platform" disabled></md-input>
-            </md-input-container>
+                    <md-input-container>
+                        <md-icon>android</md-icon>
+                        <label>Platform</label>
+                        <md-input v-model="platform" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>info</md-icon>
-                <label>Uuid</label>
-                <md-input v-model="uuid" disabled></md-input>
-            </md-input-container>
+                    <md-input-container>
+                        <md-icon>info</md-icon>
+                        <label>Uuid</label>
+                        <md-input v-model="uuid" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>system_update_at</md-icon>
-                <label>Version</label>
-                <md-input v-model="version" disabled></md-input>
-            </md-input-container>
+                    <md-input-container>
+                        <md-icon>system_update_at</md-icon>
+                        <label>Version</label>
+                        <md-input v-model="version" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>check_circle</md-icon>
-                <label>isVirtual</label>
-                <md-input v-model="isVirtual" disabled></md-input>
-            </md-input-container>
+                    <md-input-container>
+                        <md-icon>check_circle</md-icon>
+                        <label>isVirtual</label>
+                        <md-input v-model="isVirtual" disabled></md-input>
+                    </md-input-container>
 
-            <md-input-container>
-                <md-icon>developer_mode</md-icon>
-                <label>serial</label>
-                <md-input v-model="serial" disabled></md-input>
-            </md-input-container>
-        </form>
+                    <md-input-container>
+                        <md-icon>developer_mode</md-icon>
+                        <label>serial</label>
+                        <md-input v-model="serial" disabled></md-input>
+                    </md-input-container>
+                </form>
+            </md-card-content>
+        </md-card>
     </div>
 </template>
 <style>

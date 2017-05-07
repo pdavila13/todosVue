@@ -112,6 +112,9 @@ export default{
         this.authorized = false
       })
     },
+    showConnectionError () {
+      this.$refs.connectionError.open()
+    },
     onPagination (page) {
       console.log(page.page)
       this.fetchPage(page.page)
@@ -124,9 +127,6 @@ export default{
       }).then(() => {
         this.fetchPage(page.page)
       })
-    },
-    showConnectionError () {
-      this.$refs.connectionError.open()
     }
   }
 }

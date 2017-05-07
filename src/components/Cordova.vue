@@ -1,26 +1,23 @@
 <template>
-    <div>
-        CORDOVA Template
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Cordova Component</div>
+
+                    <div class="panel-body">
+                        I'm an cordova component!
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
-<style></style>
-
 <script>
 export default {
-  created () {
-    document.addEventListener('deviceready', this.onDeviceReady, false)
-  },
-  beforedDestroy () {
-    document.removeEventListener('deviceready', this.onBeforeDestroy, false)
-  },
-  methods: {
-    onDeviceReady () {
-      console.log('Device ready')
-    },
-    onBeforeDestroy () {
-      console.log('Device before destroy')
-    }
+  mounted () {
+    console.log('Component mounted.')
   }
 }
 </script>
