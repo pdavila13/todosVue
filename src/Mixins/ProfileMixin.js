@@ -1,7 +1,7 @@
-// Profile Mixin
 import todosVue from '../todosVue'
 import gravatar from 'gravatar'
 import VuePullRefresh from 'vue-pull-refresh'
+import auth from '../services/auth'
 
 export default {
   components: {
@@ -30,10 +30,15 @@ export default {
         this.createdAt = response.data.created_at
         this.updatedAt = response.data.updated_at
         this.avatar = this.avatarUrl()
+        this.latitude = auth.getLatitude()
+        this.longitude = auth.getLongitude()
       }, (response) => {
         this.connecting = false
         this.showConnectionError()
       })
+    },
+    showConnectionError () {
+      this.$refs.connectionError.open()
     },
     onRefresh: function () {
       return new Promise(function (resolve, reject) {

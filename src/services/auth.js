@@ -36,6 +36,18 @@ export default {
   getAuthHeader () {
     return 'Bearer ' + this.getToken()
   },
+  getLatitude () {
+    return window.localStorage.getItem(todosVue.LATITUDE)
+  },
+  getLongitude () {
+    return window.localStorage.getItem(todosVue.LONGITUDE)
+  },
+  saveLatitude (position) {
+    return window.localStorage.setItem(todosVue.LATITUDE, position)
+  },
+  saveLongitude (position) {
+    return window.localStorage.setItem(todosVue.LONGITUDE, position)
+  },
   onChange () {}
 }
 
