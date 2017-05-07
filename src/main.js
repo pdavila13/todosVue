@@ -18,7 +18,7 @@ import router from './services/router'
 window.querystring = querystring
 
 window.axios = Axios
-Vue.prototype.$http = window.axios
+Vue.prototype.$http = Axios
 
 window.axios.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest'

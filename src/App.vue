@@ -26,7 +26,7 @@
         </md-toolbar>
 
         <div class="main-sidebar-links">
-          <md-list>
+          <md-list class="md-dense">
             <md-list-item>
               <router-link @click.native="toggleLeftSidenav" exact to="/todos">
                 <md-icon>move_to_inbox</md-icon><p>Todos</p>
