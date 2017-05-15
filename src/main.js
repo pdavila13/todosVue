@@ -14,9 +14,6 @@ import Axios from 'axios'
 import querystring from 'querystring'
 import auth from './services/auth'
 
-import 'fastclick/lib/fastclick'
-import 'animate.css/animate.css'
-
 window.axios = Axios
 window.querystring = querystring
 Vue.prototype.$http = Axios

@@ -23,28 +23,51 @@
 </style>
 <script>
 import todosVue from '../todosVue'
-import auth from '../services/auth'
+
 export default{
   data () {
     return {
       authorized: false
     }
   },
+  created () {
+    if (document.location.hash) var token = this.extractToken(document.location.hash)
+    if (token) {
+      this.saveToken(token)
+      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + this.fetchToken()
+    }
+    if (this.token == null) this.token = this.fetchToken()
+    if (this.token) {
+      this.authorized = true
+      this.$emit('eventLogin')
+    }
+  },
   methods: {
     extractToken: function (hash) {
       return hash.match(/#(?:access_token)=([\S\s]*?)&/)[1]
     },
+    saveToken: function (token) {
+      window.localStorage.setItem(todosVue.STORAGE_KEY, token)
+    },
+    fetchToken: function () {
+      return window.localStorage.getItem(todosVue.STORAGE_KEY)
+    },
+    logout: function () {
+      window.localStorage.removeItem(todosVue.STORAGE_KEY)
+      this.authorized = false
+      this.$emit('eventLogout')
+    },
     login: function () {
+      console.log('Do connect here!')
       query = {
-        client_id: todosVue.OAUTH_CLIENT_ID,
-        redirect_uri: todosVue.OAUTH_REDIRECT_URI,
+        client_id: todosVue.AUTH_CLIENT_ID,
+        redirect_uri: todosVue.AUTH_REDIRECT_URI,
         response_type: 'token',
         scope: ''
       }
       var query = window.querystring.stringify(query)
       if (window.cordova && window.device.platform !== 'browser') {
-        var oAuthWindow = window.cordova.InAppBrowser.open(todosVue.OAUTH_SERVER_URL + query, '_blank', 'location=yes')
-
+        var oAuthWindow = window.cordova.InAppBrowser.open('https://todosbackend.pdavila.2dam.acacha.org/oauth/authorize?' + query, '_blank', 'location=yes')
         var login = this
         oAuthWindow.addEventListener('loadstart', function (e) {
           var url = e.url
@@ -55,40 +78,25 @@ export default{
           if (hash) {
             var accessToken = login.extractToken('#' + String(hash))
             if (accessToken) {
-              auth.saveToken(accessToken)
+              login.saveToken(accessToken)
               login.authorized = true
               oAuthWindow.close()
             }
           }
         })
       } else {
-        window.location.replace(todosVue.OAUTH_SERVER_URL + query)
+        console.log('https://todosbackend.pdavila.2dam.acacha.org/oauth/authorize?' + query)
+        window.location.replace('https://todosbackend.pdavila.2dam.acacha.org/oauth/authorize?' + query)
       }
     },
-    initLogout: function () {
+    initlogout: function () {
       this.openDialog('sureToLogout')
     },
     openDialog: function (ref) {
       this.$refs[ref].open()
     },
-    logout: function () {
-      window.localStorage.removeItem(todosVue.STORAGE_TOKEN_KEY)
-      this.authorized = false
-    },
     onCloseSureToLogout: function (type) {
       if (type === 'ok') this.logout()
-    }
-  },
-  created () {
-    if (document.location.hash) var token = this.extractToken(document.location.hash)
-    if (token) auth.saveToken(token)
-    if (this.token == null) this.token = auth.getToken()
-    if (this.token) {
-      this.authorized = true
-      this.$http.defaults.headers.common['Authorization'] = auth.getAuthHeader()
-    } else {
-      this.authorized = false
-      this.$http.defaults.headers.common['Authorization'] = ''
     }
   }
 }
