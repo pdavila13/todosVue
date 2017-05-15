@@ -1,7 +1,7 @@
 const todosVue = {
   STORAGE_TOKEN_KEY: 'token',
-  OAUTH_CLIENT_ID: 1,
-  OAUTH_REDIRECT_URI: 'http://todosvue.pavila.2dam.acacha.org/login',
+  OAUTH_CLIENT_ID: 3,
+  OAUTH_REDIRECT_URI: 'http://todosvue.pdavila.2dam.acacha.org/login',
   OAUTH_SERVER_URL: 'https://todosbackend.pdavila.2dam.acacha.org/oauth/authorize?',
   API_TASK_URL: 'https://todosbackend.pdavila.2dam.acacha.org/api/v1/task',
   API_PROFILE_URL: 'https://todosbackend.pdavila.2dam.acacha.org/api/v1/user',
